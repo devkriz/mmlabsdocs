@@ -6,6 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import sphinx_rtd_theme
+
 project = 'MMLabs API'
 copyright = '2024, Motion Miners GmbH'
 author = 'Motion Miners GmbH'
@@ -19,6 +21,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
+    'sphinx_rtd_theme',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -38,3 +41,20 @@ html_static_path = ['_static']
 
 # Intersphinx mapping to Python standard library
 intersphinx_mapping = {'python': ('https://docs.python.org/3', None)}
+
+# Theme options
+html_theme_options = {
+    'navigation_depth': 4,
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'includehidden': True,
+    'titles_only': False,
+    'style_external_links': True,
+    'display_version': False,
+}
+
+# Add any extra paths that contain custom files
+html_css_files = [
+    'custom.css',
+]
+
