@@ -1,0 +1,1177 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation for MotionMiners API by Process Living Lab &mdash; MMLabs API  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            MMLabs API
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Documentation for MotionMiners API by Process Living Lab</a><ul>
+<li><a class="reference internal" href="#measurement-processing">Measurement Processing</a><ul>
+<li><a class="reference internal" href="#key-features">Key Features</a></li>
+<li><a class="reference internal" href="#core-functions">Core Functions</a><ul>
+<li><a class="reference internal" href="#time-series-loading">Time Series Loading</a><ul>
+<li><a class="reference internal" href="#get_available_ts_for_measurement"><code class="docutils literal notranslate"><span class="pre">get_available_ts_for_measurement()</span></code></a></li>
+<li><a class="reference internal" href="#load_timeseries"><code class="docutils literal notranslate"><span class="pre">load_timeseries()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#activity-data">Activity Data</a><ul>
+<li><a class="reference internal" href="#get_base_activity_ts_for_measurement"><code class="docutils literal notranslate"><span class="pre">get_base_activity_ts_for_measurement()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#region-data">Region Data</a><ul>
+<li><a class="reference internal" href="#get_region_ts_for_measurement"><code class="docutils literal notranslate"><span class="pre">get_region_ts_for_measurement()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#step-and-movement-data">Step and Movement Data</a><ul>
+<li><a class="reference internal" href="#get_step_ts_for_measurement"><code class="docutils literal notranslate"><span class="pre">get_step_ts_for_measurement()</span></code></a></li>
+<li><a class="reference internal" href="#get_walking_speed_ts_for_measurement"><code class="docutils literal notranslate"><span class="pre">get_walking_speed_ts_for_measurement()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#beacon-and-fork-height-data">Beacon and Fork Height Data</a><ul>
+<li><a class="reference internal" href="#get_dynamic_beacon_data_for_measurement"><code class="docutils literal notranslate"><span class="pre">get_dynamic_beacon_data_for_measurement()</span></code></a></li>
+<li><a class="reference internal" href="#get_fork_height_data_for_measurement"><code class="docutils literal notranslate"><span class="pre">get_fork_height_data_for_measurement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-management">Data Management</a><ul>
+<li><a class="reference internal" href="#MMLabsData"><code class="docutils literal notranslate"><span class="pre">MMLabsData</span></code></a><ul>
+<li><a class="reference internal" href="#MMLabsData.add_api_token"><code class="docutils literal notranslate"><span class="pre">MMLabsData.add_api_token()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsData.get_layout_image"><code class="docutils literal notranslate"><span class="pre">MMLabsData.get_layout_image()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsData.get_measurements_df"><code class="docutils literal notranslate"><span class="pre">MMLabsData.get_measurements_df()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsData.get_api_all_data"><code class="docutils literal notranslate"><span class="pre">MMLabsData.get_api_all_data()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsData.get_measurement_dir_path"><code class="docutils literal notranslate"><span class="pre">MMLabsData.get_measurement_dir_path()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-structure">Data Structure</a></li>
+<li><a class="reference internal" href="#example-usage">Example Usage</a></li>
+<li><a class="reference internal" href="#cache-structure">Cache Structure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-interface">API Interface</a><ul>
+<li><a class="reference internal" href="#MMLabsAPI"><code class="docutils literal notranslate"><span class="pre">MMLabsAPI</span></code></a><ul>
+<li><a class="reference internal" href="#MMLabsAPI.set_token"><code class="docutils literal notranslate"><span class="pre">MMLabsAPI.set_token()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsAPI.get_layout_image"><code class="docutils literal notranslate"><span class="pre">MMLabsAPI.get_layout_image()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsAPI.get_measurements"><code class="docutils literal notranslate"><span class="pre">MMLabsAPI.get_measurements()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsAPI.get_measurement"><code class="docutils literal notranslate"><span class="pre">MMLabsAPI.get_measurement()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsAPI.get_process_metadata"><code class="docutils literal notranslate"><span class="pre">MMLabsAPI.get_process_metadata()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-endpoints">API Endpoints</a></li>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+<li><a class="reference internal" href="#id1">Example Usage</a></li>
+<li><a class="reference internal" href="#error-handling">Error Handling</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#map-visualization">Map Visualization</a><ul>
+<li><a class="reference internal" href="#MMLabsMap"><code class="docutils literal notranslate"><span class="pre">MMLabsMap</span></code></a><ul>
+<li><a class="reference internal" href="#MMLabsMap.create_map"><code class="docutils literal notranslate"><span class="pre">MMLabsMap.create_map()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsMap.create_beacon_layer"><code class="docutils literal notranslate"><span class="pre">MMLabsMap.create_beacon_layer()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsMap.create_region_layer"><code class="docutils literal notranslate"><span class="pre">MMLabsMap.create_region_layer()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsMap.set_heatmap"><code class="docutils literal notranslate"><span class="pre">MMLabsMap.set_heatmap()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsMap.get_map"><code class="docutils literal notranslate"><span class="pre">MMLabsMap.get_map()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#id2">Example Usage</a></li>
+<li><a class="reference internal" href="#map-components">Map Components</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exception-handling">Exception Handling</a><ul>
+<li><a class="reference internal" href="#base-exceptions">Base Exceptions</a><ul>
+<li><a class="reference internal" href="#MMLabsException"><code class="docutils literal notranslate"><span class="pre">MMLabsException</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#click-exceptions">Click Exceptions</a><ul>
+<li><a class="reference internal" href="#ClickException"><code class="docutils literal notranslate"><span class="pre">ClickException</span></code></a><ul>
+<li><a class="reference internal" href="#ClickException.format_message"><code class="docutils literal notranslate"><span class="pre">ClickException.format_message()</span></code></a></li>
+<li><a class="reference internal" href="#ClickException.show"><code class="docutils literal notranslate"><span class="pre">ClickException.show()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#UsageError"><code class="docutils literal notranslate"><span class="pre">UsageError</span></code></a></li>
+<li><a class="reference internal" href="#BadParameter"><code class="docutils literal notranslate"><span class="pre">BadParameter</span></code></a></li>
+<li><a class="reference internal" href="#MissingParameter"><code class="docutils literal notranslate"><span class="pre">MissingParameter</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#file-handling-exceptions">File Handling Exceptions</a><ul>
+<li><a class="reference internal" href="#FileError"><code class="docutils literal notranslate"><span class="pre">FileError</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">Example Usage</a></li>
+<li><a class="reference internal" href="#error-messages">Error Messages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#translations">Translations</a><ul>
+<li><a class="reference internal" href="#constants">Constants</a><ul>
+<li><a class="reference internal" href="#ACTIVITY_TRANSLATION_KEY_TO_NAME"><code class="docutils literal notranslate"><span class="pre">ACTIVITY_TRANSLATION_KEY_TO_NAME</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">Example Usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#user-interface">User Interface</a><ul>
+<li><a class="reference internal" href="#MMLabsUI"><code class="docutils literal notranslate"><span class="pre">MMLabsUI</span></code></a><ul>
+<li><a class="reference internal" href="#MMLabsUI.show_configurator"><code class="docutils literal notranslate"><span class="pre">MMLabsUI.show_configurator()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsUI.show_map"><code class="docutils literal notranslate"><span class="pre">MMLabsUI.show_map()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsUI.show_configurator_sidecar"><code class="docutils literal notranslate"><span class="pre">MMLabsUI.show_configurator_sidecar()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsUI.show_map_sidecar"><code class="docutils literal notranslate"><span class="pre">MMLabsUI.show_map_sidecar()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsUI.show_image"><code class="docutils literal notranslate"><span class="pre">MMLabsUI.show_image()</span></code></a></li>
+<li><a class="reference internal" href="#MMLabsUI.show_json_beautified"><code class="docutils literal notranslate"><span class="pre">MMLabsUI.show_json_beautified()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">Features</a></li>
+<li><a class="reference internal" href="#id6">Example Usage</a></li>
+<li><a class="reference internal" href="#ui-components">UI Components</a></li>
+<li><a class="reference internal" href="#id7">Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">MMLabs API</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Documentation for MotionMiners API by Process Living Lab</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="documentation-for-motionminers-api-by-process-living-lab">
+<h1>Documentation for MotionMiners API by Process Living Lab<a class="headerlink" href="#documentation-for-motionminers-api-by-process-living-lab" title="Link to this heading"></a></h1>
+<section id="measurement-processing">
+<h2>Measurement Processing<a class="headerlink" href="#measurement-processing" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">measurement_processing</span></code> module provides functions for loading and processing data from downloaded measurement files. It handles various types of time series data including activities, regions, handling heights, and more.</p>
+<section id="key-features">
+<h3>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Load and process HDF5 measurement files</p></li>
+<li><p>Handle various time series data types (activities, regions, steps, etc.)</p></li>
+<li><p>Support for pause detection and removal</p></li>
+<li><p>Process beacon and fork height data</p></li>
+</ul>
+</section>
+<section id="core-functions">
+<h3>Core Functions<a class="headerlink" href="#core-functions" title="Link to this heading"></a></h3>
+<section id="time-series-loading">
+<h4>Time Series Loading<a class="headerlink" href="#time-series-loading" title="Link to this heading"></a></h4>
+<dl class="py function">
+<dt class="sig sig-object py" id="get_available_ts_for_measurement">
+<span class="sig-name descname"><span class="pre">get_available_ts_for_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#get_available_ts_for_measurement" title="Link to this definition"></a></dt>
+<dd><p>Get the available types of timeseries data for a specified measurement file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>measurement_file_path</strong> – The file path for the measurement to inspect</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of strings with available timeseries for the measurement</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="load_timeseries">
+<span class="sig-name descname"><span class="pre">load_timeseries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_ts_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_pauses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span></span></span><a class="headerlink" href="#load_timeseries" title="Link to this definition"></a></dt>
+<dd><p>Load a time series from the provided HDF5 file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measurement_file_path</strong> – The fully qualified file path</p></li>
+<li><p><strong>target_ts_name</strong> – The name of the time series file to be loaded</p></li>
+<li><p><strong>remove_pauses</strong> – Whether to remove pause durations from the result</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The requested time series data as numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="activity-data">
+<h4>Activity Data<a class="headerlink" href="#activity-data" title="Link to this heading"></a></h4>
+<dl class="py function">
+<dt class="sig sig-object py" id="get_base_activity_ts_for_measurement">
+<span class="sig-name descname"><span class="pre">get_base_activity_ts_for_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_pauses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span></span></span><a class="headerlink" href="#get_base_activity_ts_for_measurement" title="Link to this definition"></a></dt>
+<dd><p>Returns the activity time series for the given measurement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measurement_file_path</strong> – Path to the measurement file</p></li>
+<li><p><strong>remove_pauses</strong> – Whether to remove pauses from the series</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Activity time series in form of [&lt;activity_id&gt;]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="region-data">
+<h4>Region Data<a class="headerlink" href="#region-data" title="Link to this heading"></a></h4>
+<dl class="py function">
+<dt class="sig sig-object py" id="get_region_ts_for_measurement">
+<span class="sig-name descname"><span class="pre">get_region_ts_for_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_pauses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#get_region_ts_for_measurement" title="Link to this definition"></a></dt>
+<dd><p>Returns the region time series for the given measurement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measurement_file_path</strong> – Path to the measurement file</p></li>
+<li><p><strong>remove_pauses</strong> – Whether to remove pauses from the series</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Region time series in form of [&lt;region_uuid&gt;]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="step-and-movement-data">
+<h4>Step and Movement Data<a class="headerlink" href="#step-and-movement-data" title="Link to this heading"></a></h4>
+<dl class="py function">
+<dt class="sig sig-object py" id="get_step_ts_for_measurement">
+<span class="sig-name descname"><span class="pre">get_step_ts_for_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_pauses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span></span></span><a class="headerlink" href="#get_step_ts_for_measurement" title="Link to this definition"></a></dt>
+<dd><p>Returns the step time series where 1 indicates a step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measurement_file_path</strong> – Path to the measurement file</p></li>
+<li><p><strong>remove_pauses</strong> – Whether to remove pauses from the series</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Step time series in form of [0, 0, 0, 1, 0, 0, 1, 0, …]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="get_walking_speed_ts_for_measurement">
+<span class="sig-name descname"><span class="pre">get_walking_speed_ts_for_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_pauses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span></span></span><a class="headerlink" href="#get_walking_speed_ts_for_measurement" title="Link to this definition"></a></dt>
+<dd><p>Returns the walking speed time series in m/s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measurement_file_path</strong> – Path to the measurement file</p></li>
+<li><p><strong>remove_pauses</strong> – Whether to remove pauses from the series</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Walking speed time series in m/s</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="beacon-and-fork-height-data">
+<h4>Beacon and Fork Height Data<a class="headerlink" href="#beacon-and-fork-height-data" title="Link to this heading"></a></h4>
+<dl class="py function">
+<dt class="sig sig-object py" id="get_dynamic_beacon_data_for_measurement">
+<span class="sig-name descname"><span class="pre">get_dynamic_beacon_data_for_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_pauses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a></span></span><a class="headerlink" href="#get_dynamic_beacon_data_for_measurement" title="Link to this definition"></a></dt>
+<dd><p>Returns beacon type, closeness and usage info for all dynamic beacons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measurement_file_path</strong> – Path to the measurement file</p></li>
+<li><p><strong>remove_pauses</strong> – Whether to remove pauses from the series</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (closeness_arr, usage_arr, uuids)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="get_fork_height_data_for_measurement">
+<span class="sig-name descname"><span class="pre">get_fork_height_data_for_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_pauses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a></span></span><a class="headerlink" href="#get_fork_height_data_for_measurement" title="Link to this definition"></a></dt>
+<dd><p>Returns fork height level data for fork lift vehicles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>measurement_file_path</strong> – Path to the measurement file</p></li>
+<li><p><strong>remove_pauses</strong> – Whether to remove pauses from the series</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (fork_lvl_arr, fork_target_lvl_arr, beacon_uuids, beacon_type_ids, target_heights)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="data-management">
+<h2>Data Management<a class="headerlink" href="#data-management" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">data</span></code> module provides the <code class="docutils literal notranslate"><span class="pre">MMLabsData</span></code> class for managing measurement data, process metadata, and layout images.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MMLabsData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MMLabsData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offline_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsData" title="Link to this definition"></a></dt>
+<dd><p>Main class for handling MMLabs measurement data and process metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>api</strong> – Optional MMLabsAPI instance</p></li>
+<li><p><strong>data_dir</strong> – Directory for caching downloaded data</p></li>
+<li><p><strong>offline_mode</strong> – If True, operates without API connections</p></li>
+<li><p><strong>verbose</strong> – Enable verbose logging</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsData.add_api_token">
+<span class="sig-name descname"><span class="pre">add_api_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsData.add_api_token" title="Link to this definition"></a></dt>
+<dd><p>Add a new token for process data access. Retrieves and caches process metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token</strong> – Base64-encoded MPI access token</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If token is invalid or process metadata cannot be retrieved</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsData.get_layout_image">
+<span class="sig-name descname"><span class="pre">get_layout_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">process_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><span class="pre">bytes</span></a></span></span><a class="headerlink" href="#MMLabsData.get_layout_image" title="Link to this definition"></a></dt>
+<dd><p>Get the layout image associated with a process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>process_uuid</strong> – Process UUID</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Raw image bytes</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If process UUID is invalid or image cannot be retrieved</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsData.get_measurements_df">
+<span class="sig-name descname"><span class="pre">get_measurements_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">process_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pandas.DataFrame</span></span></span><a class="headerlink" href="#MMLabsData.get_measurements_df" title="Link to this definition"></a></dt>
+<dd><p>Get measurements as a sorted pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>process_uuid</strong> – Process UUID</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with measurement data, sorted by timestamp</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If process UUID is not set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsData.get_api_all_data">
+<span class="sig-name descname"><span class="pre">get_api_all_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">process_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsData.get_api_all_data" title="Link to this definition"></a></dt>
+<dd><p>Download all process data including metadata, measurements, and layout images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>process_uuid</strong> – Process UUID to retrieve data for</p></li>
+<li><p><strong>use_cache</strong> – If True, skip downloading files that exist locally</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If offline mode is enabled</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsData.get_measurement_dir_path">
+<span class="sig-name descname"><span class="pre">get_measurement_dir_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">process_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurement_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#MMLabsData.get_measurement_dir_path" title="Link to this definition"></a></dt>
+<dd><p>Get the filesystem path for a specific measurement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>process_uuid</strong> – Process UUID</p></li>
+<li><p><strong>measurement_uuid</strong> – Measurement UUID</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Full path to measurement directory</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="data-structure">
+<h3>Data Structure<a class="headerlink" href="#data-structure" title="Link to this heading"></a></h3>
+<p>The MMLabsData class maintains several key data structures:</p>
+<ul class="simple">
+<li><p><strong>processes</strong>: Dictionary mapping process UUIDs to process metadata</p></li>
+<li><p><strong>measurements</strong>: Dictionary mapping process UUIDs to measurement data</p></li>
+<li><p><strong>tokens</strong>: Dictionary storing API tokens for each process</p></li>
+</ul>
+</section>
+<section id="example-usage">
+<h3>Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mm_labs.data</span> <span class="kn">import</span> <span class="n">MMLabsData</span>
+
+<span class="c1"># Initialize data manager</span>
+<span class="n">data_manager</span> <span class="o">=</span> <span class="n">MMLabsData</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;./cache&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add API token for access</span>
+<span class="n">data_manager</span><span class="o">.</span><span class="n">add_api_token</span><span class="p">(</span><span class="s2">&quot;your-api-token&quot;</span><span class="p">)</span>
+
+<span class="c1"># Download all data for a process</span>
+<span class="n">data_manager</span><span class="o">.</span><span class="n">get_api_all_data</span><span class="p">(</span><span class="s2">&quot;process-uuid&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get measurements as DataFrame</span>
+<span class="n">measurements_df</span> <span class="o">=</span> <span class="n">data_manager</span><span class="o">.</span><span class="n">get_measurements_df</span><span class="p">(</span><span class="s2">&quot;process-uuid&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get layout image</span>
+<span class="n">layout_bytes</span> <span class="o">=</span> <span class="n">data_manager</span><span class="o">.</span><span class="n">get_layout_image</span><span class="p">(</span><span class="s2">&quot;process-uuid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="cache-structure">
+<h3>Cache Structure<a class="headerlink" href="#cache-structure" title="Link to this heading"></a></h3>
+<p>The cache directory structure is organized as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>data_dir/
+├── &lt;process_uuid&gt;/
+│   ├── process_metadata.json
+│   ├── measurements.json
+│   ├── token.json
+│   ├── layout.png
+│   └── &lt;measurement_uuid&gt;/
+│       ├── activity_data
+│       ├── region_data
+│       └── other measurement files...
+</pre></div>
+</div>
+</section>
+</section>
+<section id="api-interface">
+<h2>API Interface<a class="headerlink" href="#api-interface" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">api</span></code> module provides the <code class="docutils literal notranslate"><span class="pre">MMLabsAPI</span></code> class for interacting with the MMLabs REST API.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MMLabsAPI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MMLabsAPI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https://mpi.motionminers.com/api/4labs/v2/'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsAPI" title="Link to this definition"></a></dt>
+<dd><p>Main class for making API calls to the MMLabs server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_url</strong> – The MMLabs API endpoint URL</p></li>
+<li><p><strong>token</strong> – Optional Base64-encoded authorization token</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsAPI.set_token">
+<span class="sig-name descname"><span class="pre">set_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsAPI.set_token" title="Link to this definition"></a></dt>
+<dd><p>Set the authorization token for API interactions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token</strong> – Base64-encoded authorization token</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsAPI.get_layout_image">
+<span class="sig-name descname"><span class="pre">get_layout_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><span class="pre">bytes</span></a></span></span><a class="headerlink" href="#MMLabsAPI.get_layout_image" title="Link to this definition"></a></dt>
+<dd><p>Retrieve the layout image from the API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Image as byte array</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If token is not set or API call fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsAPI.get_measurements">
+<span class="sig-name descname"><span class="pre">get_measurements</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a></span></span><a class="headerlink" href="#MMLabsAPI.get_measurements" title="Link to this definition"></a></dt>
+<dd><p>Retrieve list of available measurements from the API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of measurement objects</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If token is not set or API call fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsAPI.get_measurement">
+<span class="sig-name descname"><span class="pre">get_measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><span class="pre">bytes</span></a></span></span><a class="headerlink" href="#MMLabsAPI.get_measurement" title="Link to this definition"></a></dt>
+<dd><p>Download a specific measurement file from the API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uuid</strong> – Measurement UUID</p></li>
+<li><p><strong>filename</strong> – Name of the file to download</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>File contents as byte array</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If UUID/filename is missing or API call fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsAPI.get_process_metadata">
+<span class="sig-name descname"><span class="pre">get_process_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a></span></span><a class="headerlink" href="#MMLabsAPI.get_process_metadata" title="Link to this definition"></a></dt>
+<dd><p>Retrieve process metadata from the API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Process metadata dictionary</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If token is not set or API call fails</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="api-endpoints">
+<h3>API Endpoints<a class="headerlink" href="#api-endpoints" title="Link to this heading"></a></h3>
+<p>The MMLabsAPI class interacts with the following endpoints:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/layout_image</span></code>: Retrieve layout image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/measurements</span></code>: List available measurements</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/measurements/&lt;uuid&gt;/files/&lt;filename&gt;</span></code>: Download measurement file</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/process_metadata</span></code>: Get process metadata</p></li>
+</ul>
+</section>
+<section id="authentication">
+<h3>Authentication<a class="headerlink" href="#authentication" title="Link to this heading"></a></h3>
+<p>All API calls require authentication using a Bearer token:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">api</span> <span class="o">=</span> <span class="n">MMLabsAPI</span><span class="p">()</span>
+<span class="n">api</span><span class="o">.</span><span class="n">set_token</span><span class="p">(</span><span class="s2">&quot;your-base64-encoded-token&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3>Example Usage<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mm_labs.api</span> <span class="kn">import</span> <span class="n">MMLabsAPI</span>
+
+<span class="c1"># Initialize API client</span>
+<span class="n">api</span> <span class="o">=</span> <span class="n">MMLabsAPI</span><span class="p">()</span>
+<span class="n">api</span><span class="o">.</span><span class="n">set_token</span><span class="p">(</span><span class="s2">&quot;your-token&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get process metadata</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_process_metadata</span><span class="p">()</span>
+
+<span class="c1"># List measurements</span>
+<span class="n">measurements</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_measurements</span><span class="p">()</span>
+
+<span class="c1"># Download measurement file</span>
+<span class="n">file_data</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_measurement</span><span class="p">(</span>
+    <span class="n">uuid</span><span class="o">=</span><span class="s2">&quot;measurement-uuid&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;activity_data&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Get layout image</span>
+<span class="n">image_bytes</span> <span class="o">=</span> <span class="n">api</span><span class="o">.</span><span class="n">get_layout_image</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="error-handling">
+<h3>Error Handling<a class="headerlink" href="#error-handling" title="Link to this heading"></a></h3>
+<p>The API client raises <code class="docutils literal notranslate"><span class="pre">MMLabsException</span></code> in the following cases:</p>
+<ul class="simple">
+<li><p>Token not set</p></li>
+<li><p>Missing required parameters</p></li>
+<li><p>API request failures</p></li>
+<li><p>Invalid responses</p></li>
+</ul>
+<p>Example error handling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mm_labs.exceptions</span> <span class="kn">import</span> <span class="n">MMLabsException</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">get_process_metadata</span><span class="p">()</span>
+<span class="k">except</span> <span class="n">MMLabsException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;API error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="map-visualization">
+<h2>Map Visualization<a class="headerlink" href="#map-visualization" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">map</span></code> module provides the <code class="docutils literal notranslate"><span class="pre">MMLabsMap</span></code> class for visualizing layout data, beacons, and regions using interactive maps.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MMLabsMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MMLabsMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#MMLabsData" title="MMLabsData"><span class="pre">MMLabsData</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_uuid</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsMap" title="Link to this definition"></a></dt>
+<dd><p>Main class for creating interactive maps with layout visualization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – MMLabsData instance containing process data</p></li>
+<li><p><strong>process_uuid</strong> – UUID of the process to visualize</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsMap.create_map">
+<span class="sig-name descname"><span class="pre">create_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsMap.create_map" title="Link to this definition"></a></dt>
+<dd><p>Creates the base map with layout image overlays.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsMap.create_beacon_layer">
+<span class="sig-name descname"><span class="pre">create_beacon_layer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsMap.create_beacon_layer" title="Link to this definition"></a></dt>
+<dd><p>Creates a layer showing beacons on the map with interactive markers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsMap.create_region_layer">
+<span class="sig-name descname"><span class="pre">create_region_layer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsMap.create_region_layer" title="Link to this definition"></a></dt>
+<dd><p>Creates a layer showing regions as interactive polygons.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsMap.set_heatmap">
+<span class="sig-name descname"><span class="pre">set_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsMap.set_heatmap" title="Link to this definition"></a></dt>
+<dd><p>Sets up a heatmap visualization for regions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Dictionary mapping region IDs to values (0.0 to 1.0)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsMap.get_map">
+<span class="sig-name descname"><span class="pre">get_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ipyleaflet.Map</span></span></span><a class="headerlink" href="#MMLabsMap.get_map" title="Link to this definition"></a></dt>
+<dd><p>Returns the interactive map object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ipyleaflet Map instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Interactive map visualization using ipyleaflet</p></li>
+<li><p>Layout image overlay with proper georeferencing</p></li>
+<li><p>Beacon positioning with interactive markers</p></li>
+<li><p>Region visualization with hover effects</p></li>
+<li><p>Heatmap support for region data</p></li>
+<li><p>Information popup for regions and beacons</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Example Usage<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mm_labs.map</span> <span class="kn">import</span> <span class="n">MMLabsMap</span>
+<span class="kn">from</span> <span class="nn">mm_labs.data</span> <span class="kn">import</span> <span class="n">MMLabsData</span>
+
+<span class="c1"># Initialize data manager</span>
+<span class="n">data_manager</span> <span class="o">=</span> <span class="n">MMLabsData</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;./cache&quot;</span><span class="p">)</span>
+<span class="n">data_manager</span><span class="o">.</span><span class="n">add_api_token</span><span class="p">(</span><span class="s2">&quot;your-api-token&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create map for a process</span>
+<span class="n">process_map</span> <span class="o">=</span> <span class="n">MMLabsMap</span><span class="p">(</span><span class="n">data_manager</span><span class="p">,</span> <span class="s2">&quot;process-uuid&quot;</span><span class="p">)</span>
+
+<span class="c1"># Add heatmap data</span>
+<span class="n">heatmap_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="mf">0.2</span>
+<span class="p">}</span>
+<span class="n">process_map</span><span class="o">.</span><span class="n">set_heatmap</span><span class="p">(</span><span class="n">heatmap_data</span><span class="p">)</span>
+
+<span class="c1"># Display the map (in Jupyter notebook)</span>
+<span class="n">process_map</span><span class="o">.</span><span class="n">get_map</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="map-components">
+<h3>Map Components<a class="headerlink" href="#map-components" title="Link to this heading"></a></h3>
+<p>The map visualization includes several layers:</p>
+<ul class="simple">
+<li><p><strong>Base Map</strong>: OpenStreetMap background</p></li>
+<li><p><strong>Layout</strong>: Process layout image overlay</p></li>
+<li><p><strong>Beacons</strong>: Interactive markers showing beacon positions</p></li>
+<li><p><strong>Regions</strong>: Interactive polygons showing defined regions</p></li>
+<li><p><strong>Heatmap</strong>: Optional choropleth visualization of region data</p></li>
+</ul>
+</section>
+<section id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h3>
+<p>The map module requires:</p>
+<ul class="simple">
+<li><p>ipyleaflet</p></li>
+<li><p>ipywidgets</p></li>
+<li><p>branca</p></li>
+<li><p>PIL (Python Imaging Library)</p></li>
+<li><p>numpy</p></li>
+</ul>
+</section>
+</section>
+<section id="exception-handling">
+<h2>Exception Handling<a class="headerlink" href="#exception-handling" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">exceptions</span></code> module provides a set of custom exceptions for handling various error cases in the MMLabs API.</p>
+<section id="base-exceptions">
+<h3>Base Exceptions<a class="headerlink" href="#base-exceptions" title="Link to this heading"></a></h3>
+<dl class="py exception">
+<dt class="sig sig-object py" id="MMLabsException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MMLabsException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsException" title="Link to this definition"></a></dt>
+<dd><p>Base exception class for all MMLabs-specific errors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> – Error message to display</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="click-exceptions">
+<h3>Click Exceptions<a class="headerlink" href="#click-exceptions" title="Link to this heading"></a></h3>
+<dl class="py exception">
+<dt class="sig sig-object py" id="ClickException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ClickException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ClickException" title="Link to this definition"></a></dt>
+<dd><p>Base exception that Click can handle and show to the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> – Error message to display</p>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>exit_code</strong> – The exit code for this exception (default: 1)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="ClickException.format_message">
+<span class="sig-name descname"><span class="pre">format_message</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="headerlink" href="#ClickException.format_message" title="Link to this definition"></a></dt>
+<dd><p>Returns the formatted error message.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ClickException.show">
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">IO</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#ClickException.show" title="Link to this definition"></a></dt>
+<dd><p>Display the error message to the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> – File-like object to write to (defaults to stderr)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="UsageError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UsageError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#UsageError" title="Link to this definition"></a></dt>
+<dd><p>Signals a usage error, typically aborting further handling.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – Error message to display</p></li>
+<li><p><strong>ctx</strong> – Optional Click context that caused the error</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>exit_code</strong> – The exit code for this exception (default: 2)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="BadParameter">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BadParameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Parameter</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_hint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BadParameter" title="Link to this definition"></a></dt>
+<dd><p>Formats a standardized error message for invalid parameter values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – Error message to display</p></li>
+<li><p><strong>ctx</strong> – Optional Click context</p></li>
+<li><p><strong>param</strong> – Parameter object that caused the error</p></li>
+<li><p><strong>param_hint</strong> – Optional string to show as parameter name</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="MissingParameter">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MissingParameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Context</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Parameter</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_hint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MissingParameter" title="Link to this definition"></a></dt>
+<dd><p>Raised when a required option or argument is not provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – Error message to display</p></li>
+<li><p><strong>ctx</strong> – Optional Click context</p></li>
+<li><p><strong>param</strong> – Parameter object that’s missing</p></li>
+<li><p><strong>param_hint</strong> – Optional string to show as parameter name</p></li>
+<li><p><strong>param_type</strong> – Type of parameter (“parameter”, “option”, or “argument”)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="file-handling-exceptions">
+<h3>File Handling Exceptions<a class="headerlink" href="#file-handling-exceptions" title="Link to this heading"></a></h3>
+<dl class="py exception">
+<dt class="sig sig-object py" id="FileError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FileError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FileError" title="Link to this definition"></a></dt>
+<dd><p>Raised when a file cannot be opened.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – Name of the file that couldn’t be opened</p></li>
+<li><p><strong>hint</strong> – Optional hint about the error (defaults to “unknown error”)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="id3">
+<h3>Example Usage<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Attempt API operation</span>
+    <span class="n">api</span><span class="o">.</span><span class="n">get_process_metadata</span><span class="p">()</span>
+<span class="k">except</span> <span class="n">MMLabsException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;API error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">FileError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File error: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">format_message</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">UsageError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">e</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># Shows formatted error with usage hints</span>
+</pre></div>
+</div>
+</section>
+<section id="error-messages">
+<h3>Error Messages<a class="headerlink" href="#error-messages" title="Link to this heading"></a></h3>
+<p>Examples of formatted error messages:</p>
+<ul>
+<li><p>Missing Parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span><span class="p">:</span> <span class="n">Missing</span> <span class="n">option</span> <span class="s2">&quot;--token&quot;</span><span class="o">.</span>
+</pre></div>
+</div>
+</li>
+<li><p>Bad Parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span><span class="p">:</span> <span class="n">Invalid</span> <span class="n">value</span> <span class="k">for</span> <span class="s2">&quot;--process-id&quot;</span><span class="p">:</span> <span class="n">Process</span> <span class="n">UUID</span> <span class="ow">not</span> <span class="n">found</span><span class="o">.</span>
+</pre></div>
+</div>
+</li>
+<li><p>File Error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Error</span><span class="p">:</span> <span class="n">Could</span> <span class="ow">not</span> <span class="nb">open</span> <span class="n">file</span> <span class="s1">&#39;data.json&#39;</span><span class="p">:</span> <span class="n">Permission</span> <span class="n">denied</span><span class="o">.</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="translations">
+<h2>Translations<a class="headerlink" href="#translations" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">translations</span></code> module provides mappings between internal activity keys and their human-readable names.</p>
+<section id="constants">
+<h3>Constants<a class="headerlink" href="#constants" title="Link to this heading"></a></h3>
+<dl class="py data">
+<dt class="sig sig-object py" id="ACTIVITY_TRANSLATION_KEY_TO_NAME">
+<span class="sig-name descname"><span class="pre">ACTIVITY_TRANSLATION_KEY_TO_NAME</span></span><a class="headerlink" href="#ACTIVITY_TRANSLATION_KEY_TO_NAME" title="Link to this definition"></a></dt>
+<dd><p>Dictionary mapping internal activity keys to human-readable names.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ACTIVITY_TRANSLATION_KEY_TO_NAME</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;HUMAN_ACT.WALK&#39;</span><span class="p">:</span> <span class="s1">&#39;Walk&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HUMAN_ACT.OTHER&#39;</span><span class="p">:</span> <span class="s1">&#39;Unknown&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HUMAN_ACT.STAND&#39;</span><span class="p">:</span> <span class="s1">&#39;Stand&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HUMAN_ACT.HANDLE&#39;</span><span class="p">:</span> <span class="s1">&#39;Handling&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HUMAN_ACT.DRIVE&#39;</span><span class="p">:</span> <span class="s1">&#39;Drive&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HUMAN_ACT.NO_HANDLE&#39;</span><span class="p">:</span> <span class="s1">&#39;No Handling&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HUMAN_ACT.HANDLE_UP&#39;</span><span class="p">:</span> <span class="s1">&#39;Handle up&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HUMAN_ACT.HANDLE_CENTER&#39;</span><span class="p">:</span> <span class="s1">&#39;Handle center&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;HUMAN_ACT.HANDLE_DOWN&#39;</span><span class="p">:</span> <span class="s1">&#39;Handle down&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="id4">
+<h3>Example Usage<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mm_labs.translations</span> <span class="kn">import</span> <span class="n">ACTIVITY_TRANSLATION_KEY_TO_NAME</span>
+
+<span class="c1"># Convert activity key to human-readable name</span>
+<span class="n">activity_key</span> <span class="o">=</span> <span class="s1">&#39;HUMAN_ACT.WALK&#39;</span>
+<span class="n">activity_name</span> <span class="o">=</span> <span class="n">ACTIVITY_TRANSLATION_KEY_TO_NAME</span><span class="p">[</span><span class="n">activity_key</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Activity: </span><span class="si">{</span><span class="n">activity_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Output: Activity: Walk</span>
+
+<span class="c1"># Get all available activities</span>
+<span class="n">available_activities</span> <span class="o">=</span> <span class="n">ACTIVITY_TRANSLATION_KEY_TO_NAME</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="user-interface">
+<h2>User Interface<a class="headerlink" href="#user-interface" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">ui</span></code> module provides the <code class="docutils literal notranslate"><span class="pre">MMLabsUI</span></code> class for creating interactive Jupyter notebook interfaces for MMLabs data visualization and management.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="MMLabsUI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MMLabsUI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsUI" title="Link to this definition"></a></dt>
+<dd><p>Main class for creating interactive UI components in Jupyter notebooks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> – Optional MMLabsData instance for data management</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsUI.show_configurator">
+<span class="sig-name descname"><span class="pre">show_configurator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">widgets.VBox</span></span></span><a class="headerlink" href="#MMLabsUI.show_configurator" title="Link to this definition"></a></dt>
+<dd><p>Creates and returns a configuration widget with token management and data selection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>IPython widget containing the configuration interface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsUI.show_map">
+<span class="sig-name descname"><span class="pre">show_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ipyleaflet.Map</span></span></span><a class="headerlink" href="#MMLabsUI.show_map" title="Link to this definition"></a></dt>
+<dd><p>Creates and returns an interactive map visualization for the selected process.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Interactive map widget</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#MMLabsException" title="MMLabsException"><strong>MMLabsException</strong></a> – If no process is selected</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsUI.show_configurator_sidecar">
+<span class="sig-name descname"><span class="pre">show_configurator_sidecar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anchor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'right'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsUI.show_configurator_sidecar" title="Link to this definition"></a></dt>
+<dd><p>Displays the configuration widget in a sidecar panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>anchor</strong> – Position of the sidecar (“right” or “left”)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsUI.show_map_sidecar">
+<span class="sig-name descname"><span class="pre">show_map_sidecar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anchor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'right'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">listen_to_selection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MMLabsUI.show_map_sidecar" title="Link to this definition"></a></dt>
+<dd><p>Displays the map widget in a sidecar panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>anchor</strong> – Position of the sidecar (“right” or “left”)</p></li>
+<li><p><strong>listen_to_selection</strong> – Whether to update on process selection changes</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsUI.show_image">
+<span class="sig-name descname"><span class="pre">show_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><span class="pre">bytes</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PIL.Image</span></span></span><a class="headerlink" href="#MMLabsUI.show_image" title="Link to this definition"></a></dt>
+<dd><p>Displays image data as a PIL Image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>image_data</strong> – Raw image bytes</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>PIL Image object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MMLabsUI.show_json_beautified">
+<span class="sig-name descname"><span class="pre">show_json_beautified</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">json_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">widgets.JSON</span></span></span><a class="headerlink" href="#MMLabsUI.show_json_beautified" title="Link to this definition"></a></dt>
+<dd><p>Displays JSON data in a formatted widget.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>json_data</strong> – Dictionary to display</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON display widget</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<section id="id5">
+<h3>Features<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Interactive process and measurement selection</p></li>
+<li><p>Token management interface</p></li>
+<li><p>Map visualization in sidecar panels</p></li>
+<li><p>Real-time updates on selection changes</p></li>
+<li><p>Image and JSON data visualization</p></li>
+<li><p>Offline mode support</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Example Usage<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mm_labs.ui</span> <span class="kn">import</span> <span class="n">MMLabsUI</span>
+<span class="kn">from</span> <span class="nn">mm_labs.data</span> <span class="kn">import</span> <span class="n">MMLabsData</span>
+
+<span class="c1"># Initialize data manager</span>
+<span class="n">data_manager</span> <span class="o">=</span> <span class="n">MMLabsData</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;./cache&quot;</span><span class="p">)</span>
+<span class="n">data_manager</span><span class="o">.</span><span class="n">add_api_token</span><span class="p">(</span><span class="s2">&quot;your-api-token&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create UI</span>
+<span class="n">ui</span> <span class="o">=</span> <span class="n">MMLabsUI</span><span class="p">(</span><span class="n">data_manager</span><span class="p">)</span>
+
+<span class="c1"># Show configuration panel</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">show_configurator_sidecar</span><span class="p">()</span>
+
+<span class="c1"># Show map visualization</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">show_map_sidecar</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="ui-components">
+<h3>UI Components<a class="headerlink" href="#ui-components" title="Link to this heading"></a></h3>
+<p>The UI consists of several key components:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Token Management</strong>:</dt><dd><ul>
+<li><p>Token input field</p></li>
+<li><p>Add token button</p></li>
+<li><p>Process metadata download</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Data Selection</strong>:</dt><dd><ul>
+<li><p>Process dropdown</p></li>
+<li><p>Measurement dropdown</p></li>
+<li><p>Offline mode toggle</p></li>
+<li><p>Refresh button</p></li>
+<li><p>Download button</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Map Visualization</strong>:</dt><dd><ul>
+<li><p>Interactive map display</p></li>
+<li><p>Layout overlay</p></li>
+<li><p>Beacon markers</p></li>
+<li><p>Region highlighting</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="id7">
+<h3>Dependencies<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p>The UI module requires:</p>
+<ul class="simple">
+<li><p>ipywidgets</p></li>
+<li><p>sidecar</p></li>
+<li><p>IPython</p></li>
+<li><p>PIL (Python Imaging Library)</p></li>
+<li><p>pandas</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Motion Miners GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
