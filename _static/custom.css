@@ -1,0 +1,5 @@
+# Create a custom CSS file
+echo '/* Custom styles */
+.wy-nav-content {
+    max-width: 1200px !important;
+}' > source/_static/custom.css
